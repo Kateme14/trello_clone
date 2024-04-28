@@ -93,7 +93,22 @@
   .delete-button {
     @include secondary-btn()
     }
+
+  .move-to-in-progress-btn {
+    @include secondary-btn();
+    max-width: 105px;
+  }
   
+  .move-to-done-btn {
+    @include secondary-btn();
+    max-width: 100px;
+  }
+
+.move-to-todo-btn{
+  @include secondary-btn();
+  max-width: 100px;
+}
+
 .spacer {
       height: 10px;
 }
