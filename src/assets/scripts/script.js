@@ -13,7 +13,7 @@ function updateTime() {
   
   document.addEventListener('DOMContentLoaded', function() {
       restoreFromLocalStorage()
-  });
+  })
     
   const columns = document.querySelectorAll('.column')
     
@@ -22,7 +22,7 @@ function updateTime() {
     column.addEventListener('dragenter', dragEnter)
     column.addEventListener('dragleave', dragLeave)
     column.addEventListener('drop', dragDrop)
-  });
+  })
     
   let draggedCard = null
     
@@ -54,18 +54,15 @@ function updateTime() {
       this.style.backgroundColor = ''
     }
     
-
     function dragDrop() {
       const columnId = this.getAttribute('id')
       const column = document.getElementById(columnId)
       column.appendChild(draggedCard)
       this.style.backgroundColor = ''
-  
       updateCardButtons(draggedCard, columnId)
       saveToLocalStorage()
   }
   
-
   function openModal() {
     document.getElementById('card-title').value = ''
     document.getElementById('card-content').value = ''
@@ -76,7 +73,6 @@ function updateTime() {
     document.getElementById('modal').style.display = 'none'
   }
   
-
   const form = document.getElementById('card-form')
   
   form.addEventListener('submit', function(event) {
@@ -88,21 +84,25 @@ function updateTime() {
     closeModal()
   })
   
-  
   function addCard(title, content, columnId) {
     const column = document.getElementById(columnId)
+    if (!column) {
+      console.error(`Column with id '${columnId}' not found.`)
+      return
+    }
     if (column.children.length === 0 || (column.children.length === 1 && column.children[0].classList.contains('placeholder'))) {
       column.innerHTML = ''
     }
     if (title && content) {
-      const newCard = createCard(title, content, columnId)
+      const currentTime = new Date()
+      const creationTime = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`
+      const newCard = createCard(title, content, columnId, creationTime)
       column.appendChild(newCard)
       saveToLocalStorage()
     }
   }
-  
 
-function createCard(title, content, columnId) {
+function createCard(title, content, columnId, creationTime) {
   const newCard = document.createElement('div')
   newCard.classList.add('card')
   newCard.draggable = true
@@ -117,9 +117,7 @@ function createCard(title, content, columnId) {
 
   const cardTime = document.createElement('div')
   cardTime.classList.add('card-time')
-  const currentTime = new Date()
-  const timeString = `${currentTime.getHours()}:${String(currentTime.getMinutes()).padStart(2, '0')}`
-  cardTime.textContent = "Created at: " + timeString
+  cardTime.textContent = "Created at: " + creationTime
 
   const cardButtons = document.createElement('div')
   cardButtons.classList.add('card-buttons')
@@ -188,7 +186,7 @@ function createCard(title, content, columnId) {
   newCard.addEventListener('dragstart', dragStart)
   newCard.addEventListener('dragend', dragEnd)
 
-  return newCard
+  return newCard;
 }
 
   document.querySelector('.add-btn').addEventListener('click', openModal)
@@ -253,7 +251,7 @@ function moveToToDo(card) {
 function moveToDone(card) {
     const column = document.getElementById('done')
     const columnId = column.getAttribute('id')
-    column.appendChild(card);
+    column.appendChild(card)
     updateCardButtons(card, columnId)
     saveToLocalStorage()
 }
@@ -299,7 +297,7 @@ function updateCardButtons(card, columnId) {
       moveToToDoButton.classList.add('move-to-todo-btn')
       moveToToDoButton.onclick = function() {
           moveToToDo(card)
-      };
+      }
       cardButtons.appendChild(moveToToDoButton)
       const moveToDoneButton = document.createElement('button')
       moveToDoneButton.textContent = 'Move to Done'
@@ -314,7 +312,7 @@ function updateCardButtons(card, columnId) {
       moveToToDoButton.classList.add('move-to-todo-btn')
       moveToToDoButton.onclick = function() {
           moveToToDo(card)
-      };
+      }
       cardButtons.appendChild(moveToToDoButton)
       const moveToInProgressButton = document.createElement('button')
       moveToInProgressButton.textContent = 'Move to In progress'
@@ -334,41 +332,40 @@ function updateCardButtons(card, columnId) {
       cardButtons.appendChild(deleteButton)
   }
 }
-
+  
   function saveToLocalStorage() {
     columns.forEach((column, index) => {
-        const columnId = column.getAttribute('id')
-        const cardTexts = Array.from(column.children)
-            .map(card => {
-                const cardTitle = card.querySelector('.card-title')
-                const cardContent = card.querySelector('.card-content')
-                const title = cardTitle ? cardTitle.textContent : ''
-                const content = cardContent ? cardContent.textContent : ''
-                return { title, content }
-            })
-            .filter(card => card.title.trim() !== "" || card.content.trim() !== "")
-        localStorage.setItem(columnId, JSON.stringify(cardTexts))
+      const columnId = column.getAttribute('id')
+      const cardTexts = Array.from(column.children)
+        .map(card => {
+          const cardTitle = card.querySelector('.card-title')
+          const cardContent = card.querySelector('.card-content')
+          const title = cardTitle ? cardTitle.textContent : ''
+          const content = cardContent ? cardContent.textContent : ''
+          const cardTime = card.querySelector('.card-time')
+          const creationTime = cardTime ? cardTime.textContent.replace("Created at: ", "") : ''
+          return { title, content, creationTime }
+        })
+        .filter(card => card.title.trim() !== "" || card.content.trim() !== "")
+      localStorage.setItem(columnId, JSON.stringify(cardTexts))
     })
-}
+  }
   
-
-
 function restoreFromLocalStorage() {
   columns.forEach(column => {
-      const columnId = column.getAttribute('id')
-      const cardTexts = JSON.parse(localStorage.getItem(columnId))
-      if (cardTexts) {
-          cardTexts.forEach(cardText => {
-              if (cardText.title.trim() !== "" || cardText.content.trim() !== "") {
-                  const newCard = createCard(cardText.title, cardText.content, columnId)
-                  column.appendChild(newCard)
-                  updateCardButtons(newCard, columnId)
-              }
-          })
-      }
+    const columnId = column.getAttribute('id')
+    const cardTexts = JSON.parse(localStorage.getItem(columnId))
+    if (cardTexts) {
+      cardTexts.forEach(cardText => {
+        if (cardText.title.trim() !== "" || cardText.content.trim() !== "") {
+          const newCard = createCard(cardText.title, cardText.content, columnId, cardText.creationTime)
+          column.appendChild(newCard)
+          updateCardButtons(newCard, columnId)
+        }
+      })
+    }
   })
 }
-
 
   async function getUsers() {
     try {
