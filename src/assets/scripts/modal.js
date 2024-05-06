@@ -1,3 +1,4 @@
+import { editCard } from './script.js'
 
 export function openModal() {
     document.getElementById('card-title').value = ''

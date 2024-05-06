@@ -61,7 +61,7 @@ document.querySelector('.add-btn').addEventListener('click', openModal)
 
 document.querySelector('.close').addEventListener('click', closeModal)
 
-function editCard(card, newTitle, newContent) {
+export function editCard(card, newTitle, newContent) {
   const cardTitle = card.querySelector('.card-title')
   const cardContent = card.querySelector('.card-content')
 
