@@ -1,0 +1,212 @@
+@import 'reset';
+@import 'mixins';
+  
+  .trello {
+    padding: 32px 32px 215px;
+    background-image: url(/src/assets/bg2.avif);
+    background-repeat: repeat;
+    /* background-position: center; */
+    background-size: cover;
+    // /* height: 100vh; */
+    background-attachment: fixed;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 32px;
+  }
+  
+  .program-name {
+    width: 80px;
+    height: 50px;
+  }
+  
+  .program-icon {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .clock {
+    font-size: 24px;
+  }
+  
+  .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 15px;
+      @media only screen and (max-width: 1024px) {
+        column-gap: 18px;
+    }
+        @media only screen and (max-width: 767px) {
+            grid-template-columns: 1fr;
+            row-gap: 12px;
+    }
+    }
+    
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-self: baseline;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 10px;
+     @media only screen and (max-width: 767px) {
+        width: 100%;
+    }
+   }
+  
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .card {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      position: relative;
+    }
+  
+    .card-buttons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      column-gap: 8px;
+  }
+  
+  .edit-button {
+   @include secondary-btn()
+  }
+  
+  .delete-button {
+    @include secondary-btn()
+    }
+
+  .move-to-in-progress-btn {
+    @include secondary-btn();
+    max-width: 105px;
+  }
+  
+  .move-to-done-btn {
+    @include secondary-btn();
+    max-width: 100px;
+  }
+
+.move-to-todo-btn{
+  @include secondary-btn();
+  max-width: 100px;
+}
+
+.spacer {
+      height: 10px;
+}
+  
+    .add-btn {
+      @include card-btn();
+    }
+   
+  .delete-all-btn {
+    @include card-btn();
+  }
+  
+  .in-progress__header{
+    padding: 5.5px;
+  }
+  
+    .board__header {
+      color: #fff;
+      font-size: 20px;
+    }
+  
+    #todo {
+      background: rgba(221, 222, 209, 0.3);
+    }
+  
+    #in-progress {
+      background-color: rgba(222, 222, 103, 0.5);
+    }
+  
+    #done {
+      background-color: rgb(82, 167, 122, 0.3);
+    }
+  
+    .modal {
+        @include modal();
+    }
+    
+    .modal-content {
+        @include modal-content();
+    }
+  
+    .modal-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }  
+  
+  .edit-modal {
+    @include modal();
+  }
+  
+  .edit-modal-content {
+    @include modal-content();
+  }
+  
+  .close-edit {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close-edit:hover,
+  .close-edit:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  #card-title,
+  #card-content {
+    @include card-content();
+  }
+  
+  #edit-card-title,
+  #edit-card-content {
+    @include card-content();
+  }
+  
+  .modal-button {
+    display: block;
+    margin: 0 auto;
+    padding: 6px;
+    max-width: 70px;
+    width: 100%;
+    border: 1px solid #cac5c5;
+    border-radius: 9px;
+  }

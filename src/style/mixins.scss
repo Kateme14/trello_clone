@@ -1,0 +1,53 @@
+@mixin secondary-btn() {
+    border-radius: 8px;
+    padding: 4px;
+    max-width: 44px;
+    width: 100%;
+    font-size: 10px;
+}
+
+@mixin card-btn() {
+        border-radius: 8px;
+        border: 1px solid #878282;
+        background: #3eaa6d;
+        color: #fff;
+        padding: 8px;
+        max-width: 80px;
+        width: 100;
+}
+
+@mixin modal() {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+@mixin modal-content() {
+    background-color: #fefefe;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 200px;
+    z-index: 2;
+}
+
+@mixin card-content() {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid #cac5c5;
+    padding: 6px;
+    border-radius: 8px;
+}
