@@ -10,6 +10,6 @@ export function updateTime() {
 }
 
 export function startClock() {
-    setInterval(updateTime, 60000)
+    setInterval(updateTime, 20000)
     updateTime()
 }

@@ -53,12 +53,14 @@ export function createCard(title, content, columnId, creationTime) {
                 break
             case 'moveToInProgress':
                 button.textContent = 'Move to In Progress'
+                button.classList.add('move-to-in-progress-btn')
                 button.onclick = function() {
                     moveToInProgress(newCard)
                 }
                 break
             case 'moveToDone':
                 button.textContent = 'Move to Done'
+                button.classList.add('move-to-done-btn')
                 button.onclick = function() {
                     moveToDone(newCard)
                 }

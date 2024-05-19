@@ -61,6 +61,7 @@ document.querySelector('.add-btn').addEventListener('click', openModal)
 
 document.querySelector('.close').addEventListener('click', closeModal)
 
+
 export function editCard(card, newTitle, newContent) {
   const cardTitle = card.querySelector('.card-title')
   const cardContent = card.querySelector('.card-content')
@@ -69,7 +70,6 @@ export function editCard(card, newTitle, newContent) {
   cardContent.textContent = newContent
   saveToLocalStorage()
 }
-
 
 export function deleteAllCards(columnId) {
   const column = document.getElementById(columnId)
